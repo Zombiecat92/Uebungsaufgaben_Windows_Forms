@@ -17,7 +17,7 @@ public partial class Form1 : Form
             number1 = Decimal.Parse(txtInput1.Text);
             number2 = Decimal.Parse(txtInput2.Text);
 
-            result = ddn.Text switch
+            result = ddlSymbol.Text switch
             {
                 "+" => number1 + number2,
                 "-" => number1 - number2,

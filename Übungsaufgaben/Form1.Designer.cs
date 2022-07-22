@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.txtInput1 = new System.Windows.Forms.TextBox();
-            this.ddn = new System.Windows.Forms.ComboBox();
+            this.ddlSymbol = new System.Windows.Forms.ComboBox();
             this.txtInput2 = new System.Windows.Forms.TextBox();
             this.lblResult = new System.Windows.Forms.Label();
             this.bntCalculate = new System.Windows.Forms.Button();
@@ -42,19 +42,19 @@
             this.txtInput1.Size = new System.Drawing.Size(100, 23);
             this.txtInput1.TabIndex = 0;
             // 
-            // ddn
+            // ddlSymbol
             // 
-            this.ddn.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ddn.FormattingEnabled = true;
-            this.ddn.Items.AddRange(new object[] {
+            this.ddlSymbol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ddlSymbol.FormattingEnabled = true;
+            this.ddlSymbol.Items.AddRange(new object[] {
             "+",
             "-",
             "*",
             "/"});
-            this.ddn.Location = new System.Drawing.Point(118, 12);
-            this.ddn.Name = "ddn";
-            this.ddn.Size = new System.Drawing.Size(35, 23);
-            this.ddn.TabIndex = 1;
+            this.ddlSymbol.Location = new System.Drawing.Point(118, 12);
+            this.ddlSymbol.Name = "ddlSymbol";
+            this.ddlSymbol.Size = new System.Drawing.Size(35, 23);
+            this.ddlSymbol.TabIndex = 1;
             // 
             // txtInput2
             // 
@@ -91,7 +91,7 @@
             this.Controls.Add(this.bntCalculate);
             this.Controls.Add(this.lblResult);
             this.Controls.Add(this.txtInput2);
-            this.Controls.Add(this.ddn);
+            this.Controls.Add(this.ddlSymbol);
             this.Controls.Add(this.txtInput1);
             this.Name = "Form1";
             this.Text = " Übung 1";
@@ -103,7 +103,7 @@
         #endregion
 
         private TextBox txtInput1;
-        private ComboBox ddn;
+        private ComboBox ddlSymbol;
         private TextBox txtInput2;
         private Label lblResult;
         private Button bntCalculate;
