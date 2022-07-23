@@ -1,3 +1,5 @@
+using Übung_1.Errorhandling;
+
 namespace Übung_1;
 
 public partial class Form1 : Form
@@ -31,9 +33,8 @@ public partial class Form1 : Form
         }
         catch (Exception ex)
         {
-            // TODO: Open new window
-            lblResult.Text = ex.Message;
-            lblResult.Visible = true;
+            ErrorForm errorForm = new ErrorForm();
+            errorForm.ErrorMassage = ex;
         }
     }
 }

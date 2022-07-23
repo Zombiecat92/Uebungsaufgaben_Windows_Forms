@@ -1,4 +1,4 @@
-﻿namespace Übung_2;
+﻿namespace Übung_2.Utils;
 
 public class PrimeNumberHelper
 {

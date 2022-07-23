@@ -1,5 +1,5 @@
-using System.Diagnostics;
-using Übung_2;
+using Übung_1.Errorhandling;
+using Übung_2.Utils;
 
 namespace Übung_3;
 
@@ -55,8 +55,8 @@ public partial class Form1 : Form
         }
         catch (Exception ex)
         {
-            // TODO: Open new form
-            Debug.WriteLine(ex);
+            ErrorForm errorForm = new ErrorForm();
+            errorForm.ErrorMassage = ex;
         }
     }
 }
