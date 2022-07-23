@@ -21,7 +21,7 @@ public partial class Form1 : Form
 
     private void BtnCalculate_Click(object sender, EventArgs e)
     {
-        // clear list and datagrid
+        // clear datagrid
         dagPrimeNumbers.Rows.Clear();
 
         try
@@ -40,7 +40,7 @@ public partial class Form1 : Form
             // calculate the prime numbers
             List<int> primeNumbers = primeNumberHelper.GetPrimeNumbersBetween(beginNumber, endNumber);
 
-            // if the list not empty, fill the datagrid
+            // fill the datagrid
             primeNumbers.ForEach(primeNumber => dagPrimeNumbers.Rows.Add(primeNumber.ToString()));
         }
         catch (Exception ex)
