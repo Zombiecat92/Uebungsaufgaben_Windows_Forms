@@ -2,16 +2,16 @@
 
 internal class Pathfinding
 {
-    private readonly Chessboard chessboard;
+    private readonly Chessboard _chessboard;
 
     public Pathfinding(Chessboard board)
     {
-        chessboard = board;
+        _chessboard = board;
     }
 
-    public Step? FindPath(Step currentStep)
+    async public Task<Step?> FindPath(Step currentStep)
     {
-        if (currentStep.StepCount == (chessboard.BoardSize * chessboard.BoardSize))
+        if (currentStep.StepCount == (_chessboard.BoardSize * _chessboard.BoardSize))
             return currentStep;
 
         List<Step> possibleNextSteps = PossibleNextSteps(currentStep);
@@ -20,7 +20,11 @@ internal class Pathfinding
 
         foreach (Step nextStep in sortetPossibleNextSteps)
         {
-            Step? checkedStep = FindPath(nextStep);
+            currentStep.Field.panel.BackColor = Color.Red;
+
+            await Task.Delay(500);
+
+            Step? checkedStep = await FindPath(nextStep);
 
             if (checkedStep == null)
                 continue;
@@ -51,7 +55,7 @@ internal class Pathfinding
 
     private bool IsFieldOnBoard(ChessboardCoordinate coordinate)
     {
-        if (coordinate.X <= 0 || coordinate.Y <= 0 || coordinate.X > chessboard.BoardSize || coordinate.Y > chessboard.BoardSize)
+        if (coordinate.X <= 0 || coordinate.Y <= 0 || coordinate.X > _chessboard.BoardSize || coordinate.Y > _chessboard.BoardSize)
             return false;
 
         return true;
@@ -68,7 +72,7 @@ internal class Pathfinding
             if (!IsFieldPlayable(currentStep, nextCoordinate))
                 continue;
 
-            Step possibleNextStep = new(currentStep, chessboard.ChessboardFields[nextCoordinate]);
+            Step possibleNextStep = new(currentStep, _chessboard.Fields[nextCoordinate]);
 
             possibleSteps.Add(possibleNextStep);
         }

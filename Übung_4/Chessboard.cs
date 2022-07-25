@@ -2,7 +2,7 @@
 
 internal class Chessboard
 {
-    public Dictionary<ChessboardCoordinate, ChessboardField> ChessboardFields = new();
+    public Dictionary<ChessboardCoordinate, ChessboardField> Fields = new();
     public readonly int BoardSize = 8;
 
     public void CreateChessboard()
@@ -22,8 +22,13 @@ internal class Chessboard
 
                 ChessboardField chessboardField = new(chessboardCoordinate, chessboardFieldColors[(i+j-1) % 2], chessboardLocation, panelSize);
                 
-                ChessboardFields.Add(chessboardCoordinate, chessboardField);
+                Fields.Add(chessboardCoordinate, chessboardField);
             }
         }
+    }
+
+    public Panel[] GetPanels()
+    {
+        return Fields.Values.Select(chessboardField => chessboardField.panel).ToArray();
     }
 }

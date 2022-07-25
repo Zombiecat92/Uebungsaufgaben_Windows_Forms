@@ -2,37 +2,29 @@ namespace Übung_4;
 
 public partial class Form1 : Form
 {
-    private readonly Chessboard chessboard;
-    private readonly Pathfinding pathfinding;
+    private readonly Chessboard _chessboard;
+    private readonly Pathfinding _pathfinding;
 
     public Form1()
     {
         InitializeComponent();
 
-        chessboard = new Chessboard();
-        chessboard.CreateChessboard();
+        _chessboard = new Chessboard();
+        _pathfinding = new Pathfinding(_chessboard);
 
-        pathfinding = new Pathfinding(chessboard);
+        _chessboard.CreateChessboard();
 
-        this.Controls.AddRange(chessboard.ChessboardFields.Values.Select(chessboardField => chessboardField.panel).ToArray());
-
-        foreach (var field in chessboard.ChessboardFields.Values)
-        {
-            Label label = new()
-            {
-                Text = "X:" + field.Coordinate.X.ToString() + " Y:" + field.Coordinate.Y.ToString(),
-                ForeColor = Color.OrangeRed
-            };
-
-            field.panel.Controls.Add(label);
-        }
+        this.Controls.AddRange(_chessboard.GetPanels());
     }
 
-    private void button1_Click(object sender, EventArgs e)
+    async private void button1_Click(object sender, EventArgs e)
     {
-        Step startStep = new Step(chessboard.ChessboardFields[new ChessboardCoordinate(1, 1)]);
+        Step? path;
+        Step startStep = new(_chessboard.Fields[new ChessboardCoordinate(1, 1)]);
 
-        Step? path = pathfinding.FindPath(startStep);
+        path = await _pathfinding.FindPath(startStep);
+        if (path != null)
+            path.Field.panel.BackColor = Color.Red;
 
         label1.Text = path?.ToString();
     }
