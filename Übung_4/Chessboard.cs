@@ -2,31 +2,25 @@
 
 internal class Chessboard
 {
-    public Dictionary<ChessboardCoordinate, ChessboardField> ChessboardFields;
+    public Dictionary<ChessboardCoordinate, ChessboardField> ChessboardFields = new();
+    public readonly int BoardSize = 8;
 
-    public Chessboard()
-    {
-        ChessboardFields = new Dictionary<ChessboardCoordinate, ChessboardField>();
-
-        CreateChessboard();
-    }
-
-    private void CreateChessboard()
+    public void CreateChessboard()
     {
         Color[] chessboardFieldColors = new Color[] { Color.Black, Color.White };
         const int offsetX = 12;
         const int offsetY = 12;
         const int panelSize = 50;
 
-        for (int i = 1; i <= 8; i++)
+        for (int i = 1; i <= BoardSize; i++)
         {
-            for (int j = 1; j <= 8; j++)
+            for (int j = 1; j <= BoardSize; j++)
             {
-                ChessboardCoordinate chessboardCoordinate = new ChessboardCoordinate(i, j);
+                ChessboardCoordinate chessboardCoordinate = new(i, j);
 
-                Point chessboardLocation = new Point(offsetX + ((chessboardCoordinate.X - 1) * panelSize), offsetY + ((8 - chessboardCoordinate.Y) * panelSize));
+                Point chessboardLocation = new(offsetX + ((chessboardCoordinate.X - 1) * panelSize), offsetY + ((BoardSize - chessboardCoordinate.Y) * panelSize));
 
-                ChessboardField chessboardField = new ChessboardField(chessboardCoordinate, chessboardFieldColors[(i+j-1) % 2], chessboardLocation);
+                ChessboardField chessboardField = new(chessboardCoordinate, chessboardFieldColors[(i+j-1) % 2], chessboardLocation, panelSize);
                 
                 ChessboardFields.Add(chessboardCoordinate, chessboardField);
             }

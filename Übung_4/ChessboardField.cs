@@ -2,12 +2,10 @@
 
 internal class ChessboardField
 {
-    private const int panelSize = 50;
-
     public readonly ChessboardCoordinate Coordinate;
     public readonly Panel panel;
 
-    public ChessboardField(ChessboardCoordinate coordinate, Color color, Point point)
+    public ChessboardField(ChessboardCoordinate coordinate, Color color, Point point, int panelSize)
     {
         Coordinate = coordinate;
         panel = new Panel();
