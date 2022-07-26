@@ -21,4 +21,9 @@ internal class Step
 
         Field = chessboardField;
     }
+
+    public Task<Step?> GetAwaiter()
+    {
+        return new Task<Step?>(() => this);
+    }
 }

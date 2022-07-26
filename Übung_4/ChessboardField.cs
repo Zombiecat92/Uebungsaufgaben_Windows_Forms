@@ -8,10 +8,12 @@ internal class ChessboardField
     public ChessboardField(ChessboardCoordinate coordinate, Color color, Point point, int panelSize)
     {
         Coordinate = coordinate;
-        pictureBox = new PictureBox();
-        pictureBox.BackColor = color;
-        pictureBox.Width = panelSize;
-        pictureBox.Height = panelSize;
-        pictureBox.Location = point;
+        pictureBox = new PictureBox
+        {
+            BackColor = color,
+            Width = panelSize,
+            Height = panelSize,
+            Location = point
+        };
     }
 }

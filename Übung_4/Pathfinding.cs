@@ -13,9 +13,10 @@ internal class Pathfinding
 
     async public Task<Step?> FindPath(Step currentStep)
     {
+        // If current step the last one on board
         if (currentStep.StepCount == (_chessboard.BoardSize * _chessboard.BoardSize))
         {
-            await _animator.UpdateAnimation(currentStep);
+            _ = _animator.UpdateAnimation(currentStep);
             return currentStep;
         }
 
@@ -25,12 +26,16 @@ internal class Pathfinding
 
         foreach (Step nextStep in sortetPossibleNextSteps)
         {
-            await _animator.UpdateAnimation(currentStep);
+            await _animator.UpdateAnimation(nextStep);
 
+            // If a FindPath finds a valid path, the last step of the path is returned
             Step? checkedStep = await FindPath(nextStep);
 
             if (checkedStep == null)
+            {                
+                await _animator.FailAnimation(nextStep);
                 continue;
+            }
             else
                 return checkedStep;
         }
@@ -38,6 +43,7 @@ internal class Pathfinding
         return null;
     }
 
+    // Check if the next step is valid
     private bool IsFieldPlayable(Step currendStep, ChessboardCoordinate targetFieldCoordinate)
     {
         if (!IsFieldOnBoard(targetFieldCoordinate))
@@ -45,7 +51,8 @@ internal class Pathfinding
 
         Step? step = currendStep;
 
-        while(step != null)
+        // Loop through all previous steps, if any equal next step, the next step is invalid
+        while (step != null)
         {
             if (step.Field.Coordinate.Equals(targetFieldCoordinate))
                 return false;
@@ -64,12 +71,13 @@ internal class Pathfinding
         return true;
     }
 
+    // Check if knight moves are valid, and retun them
     private List<Step> PossibleNextSteps(Step currentStep)
     {
         List<Step> possibleSteps = new();
 
         for (int i = 0; i < KnightMoves.Moves.Length; i++)
-        {
+        {            
             ChessboardCoordinate nextCoordinate = currentStep.Field.Coordinate.Add(KnightMoves.Moves[i]);
 
             if (!IsFieldPlayable(currentStep, nextCoordinate))
@@ -83,11 +91,13 @@ internal class Pathfinding
         return possibleSteps;
     }
 
+    // Sorting the steps according to the number of possible next steps from the next steps
     private List<Step> SortStepsByPossibleNextSteps(List<Step> possibleNextSteps)
     {
         Dictionary<Step, int> possibleNextStepsCount = new();
         List<Step> sortetPossibleNextSteps = new();
 
+        // Count the possible next steps and add them to the dictionary
         possibleNextSteps.ForEach(step =>
         {
             int count = PossibleNextSteps(step).Count;
@@ -95,6 +105,7 @@ internal class Pathfinding
             possibleNextStepsCount.Add(step, count);
         });
 
+        // Sort the dictionary by possible next steps count and extract the values
         sortetPossibleNextSteps = possibleNextStepsCount.OrderBy(keyValuePair => keyValuePair.Value).Select(keyValuePair => keyValuePair.Key).ToList();
 
         return sortetPossibleNextSteps;

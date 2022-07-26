@@ -2,16 +2,24 @@
 
 internal class Chessboard
 {
-    public Dictionary<ChessboardCoordinate, ChessboardField> Fields = new();
-    public readonly int BoardSize = 8;
+    public Dictionary<ChessboardCoordinate, ChessboardField> Fields;
+    public readonly int BoardSize;
 
-    public void CreateChessboard()
+    public Chessboard(int boardSize)
     {
+        Fields = new();
+        BoardSize = boardSize;
+    }
+
+    public void CreateChessboard(Form form)
+    {
+        // PictureBox settings
         Color[] chessboardFieldColors = new Color[] { Color.SandyBrown, Color.White };
         const int offsetX = 12;
         const int offsetY = 12;
         const int pictureBoxSize = 50;
 
+        // Create picturebox grid
         for (int i = 1; i <= BoardSize; i++)
         {
             for (int j = 1; j <= BoardSize; j++)
@@ -25,6 +33,9 @@ internal class Chessboard
                 Fields.Add(chessboardCoordinate, chessboardField);
             }
         }
+
+        // Add pictureboxes to form as children
+        form.Controls.AddRange(GetPictureBoxes());
     }
 
     public PictureBox[] GetPictureBoxes()
