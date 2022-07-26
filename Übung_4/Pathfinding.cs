@@ -3,16 +3,21 @@
 internal class Pathfinding
 {
     private readonly Chessboard _chessboard;
+    private readonly Animator _animator;
 
-    public Pathfinding(Chessboard board)
+    public Pathfinding(Chessboard board, Animator animator)
     {
         _chessboard = board;
+        _animator = animator;
     }
 
     async public Task<Step?> FindPath(Step currentStep)
     {
         if (currentStep.StepCount == (_chessboard.BoardSize * _chessboard.BoardSize))
+        {
+            await _animator.UpdateAnimation(currentStep);
             return currentStep;
+        }
 
         List<Step> possibleNextSteps = PossibleNextSteps(currentStep);
 
@@ -20,9 +25,7 @@ internal class Pathfinding
 
         foreach (Step nextStep in sortetPossibleNextSteps)
         {
-            currentStep.Field.panel.BackColor = Color.Red;
-
-            await Task.Delay(500);
+            await _animator.UpdateAnimation(currentStep);
 
             Step? checkedStep = await FindPath(nextStep);
 

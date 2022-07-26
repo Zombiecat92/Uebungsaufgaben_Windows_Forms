@@ -3,15 +3,15 @@
 internal class ChessboardField
 {
     public readonly ChessboardCoordinate Coordinate;
-    public readonly Panel panel;
+    public readonly PictureBox pictureBox;
 
     public ChessboardField(ChessboardCoordinate coordinate, Color color, Point point, int panelSize)
     {
         Coordinate = coordinate;
-        panel = new Panel();
-        panel.BackColor = color;
-        panel.Width = panelSize;
-        panel.Height = panelSize;
-        panel.Location = point;
+        pictureBox = new PictureBox();
+        pictureBox.BackColor = color;
+        pictureBox.Width = panelSize;
+        pictureBox.Height = panelSize;
+        pictureBox.Location = point;
     }
 }
