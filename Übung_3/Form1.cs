@@ -44,13 +44,17 @@ public partial class Form1 : Form
             // calculate differences
             List<int> primeNumbersDifferences = primeNumberHelper.GetDifferencesBetweenPrimeNumbers(primeNumbers);
 
-            // group same differences
-            IEnumerable<IGrouping<int, int>>? groupedPrimeNumbersDifferences = primeNumbersDifferences.GroupBy(x => x);
+            // sort differences
+            List<int> sortedPrimeNumbersDifferences = primeNumbersDifferences.OrderBy(diff => diff).ToList();
+
+            // group same differences and convert to dictionary<differenc, count>
+            Dictionary<int, int> groupedPrimeNumbersDifferences = sortedPrimeNumbersDifferences
+                .GroupBy(diff => diff).ToDictionary(gpk => gpk.Key, gpv => gpv.ToList().Count);
 
             // fill the datagrid
-            foreach (var group in groupedPrimeNumbersDifferences)
+            foreach (KeyValuePair<int, int> group in groupedPrimeNumbersDifferences)
             {
-                dagPrimeNumbers.Rows.Add(group.Key.ToString(), group.Count().ToString());
+                dagPrimeNumbers.Rows.Add(group.Key.ToString(), group.Value.ToString());
             }
         }
         catch (Exception ex)
